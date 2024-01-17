@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer, useState } from "react";
-import WheelComponent from "./components/wheel";
+import WheelComponent from "../components/wheel";
 import { useSelector } from "react-redux";
 import { wheelSlice } from "@/redux/commonSlicer/wheelSlicer";
 import store from "@/redux";
-import _ from 'lodash';
-const Home = () => {
+import _ from "lodash";
+const Wheel = () => {
   const segments = useSelector((state) => state.wheelSlicer.segments);
   const segColors = useSelector((state) => state.wheelSlicer.segColors);
   const segmentsBK = useSelector((state) => state.wheelSlicer.segmentsBK);
@@ -26,13 +26,17 @@ const Home = () => {
   );
   const onFinished = (item) => {
     console.log(item.winner, item.index);
-    updateState({ showWinnerPopup: true, winner: item.winner, indexOfItem: item.index });
+    updateState({
+      showWinnerPopup: true,
+      winner: item.winner,
+      indexOfItem: item.index,
+    });
   };
   const onReset = () => {
     store.dispatch(wheelSlice.actions.setSegments(segmentsBK));
     store.dispatch(wheelSlice.actions.setSegColors(segColorsBK));
     updateState({ countSegments: state.countSegments + 1 });
-  }
+  };
   const onClosed = () => {
     const tempSegments = _.cloneDeep(segments);
     const tempSegColors = _.cloneDeep(segColors);
@@ -42,7 +46,7 @@ const Home = () => {
     store.dispatch(wheelSlice.actions.setSegments(tempSegments));
     updateState({ countSegments: state.countSegments + 1 });
     updateState({ showWinnerPopup: false });
-  }
+  };
 
   const randomColor = (segmentsLength) => {
     let segColors = [];
@@ -65,7 +69,11 @@ const Home = () => {
     store.dispatch(wheelSlice.actions.setSegColorsBK(segColors));
     store.dispatch(wheelSlice.actions.setSegments(segments));
     store.dispatch(wheelSlice.actions.setSegColors(segColors));
-    updateState({ segments: segments, segColors: segColors, countSegments: segments.length });
+    updateState({
+      segments: segments,
+      segColors: segColors,
+      countSegments: segments.length,
+    });
   };
   return (
     <>
@@ -173,4 +181,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default Wheel;
