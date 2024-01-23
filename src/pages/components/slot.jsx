@@ -16,7 +16,7 @@ const SlotMachine = ({ children }) => {
     indexes = [0, 0, 0];
   const roll = (reel, offset = 0, winner_num) => {
     // Minimum of 2 + the reel offset rounds
-    const delta = (offset + 2) * num_icons + Math.floor(Math.random() * num_icons);
+    const delta = (offset + 2) * num_icons + (num_icons - +winner_num + 1);
     console.log(delta, num_icons + +winner_num);
 
     // Return promise so we can wait for all reels to finish
@@ -25,10 +25,11 @@ const SlotMachine = ({ children }) => {
         // Current background position
         backgroundPositionY = parseFloat(style["background-position-y"]),
         // Target background position
-        targetBackgroundPositionY = backgroundPositionY + delta * icon_height,
+        targetBackgroundPositionY = backgroundPositionY + (delta * icon_height - backgroundPositionY),
         // Normalized background position, for reset
         normTargetBackgroundPositionY =
           targetBackgroundPositionY % (num_icons * icon_height);
+          console.log(targetBackgroundPositionY, delta, backgroundPositionY);
 
       // Delay animation with timeout, for some reason a delay in the animation property causes stutter
       setTimeout(() => {
@@ -38,7 +39,7 @@ const SlotMachine = ({ children }) => {
         }ms cubic-bezier(.41,-0.01,.63,1.09)`;
         // Set background position
         reel.style.backgroundPositionY = `${
-          backgroundPositionY + delta * icon_height
+          backgroundPositionY + (delta * icon_height - backgroundPositionY)
         }px`;
       }, offset * 150);
 
@@ -84,6 +85,12 @@ const SlotMachine = ({ children }) => {
         // setTimeout(rollAll, 3000);
       });
   }
+  const topSpin = () => {
+    const reelsList = document.querySelectorAll(".slots > .reel");
+    [...reelsList].forEach(reel => {
+      reel.style.transition = `none`;
+    })
+  }
   return (
     <>
       <div>
@@ -94,6 +101,7 @@ const SlotMachine = ({ children }) => {
         </div>
         <div>
           <button onClick={rollAll}>Spin</button>
+          <button onClick={topSpin}>Top Spin</button>
         </div>
       </div>
     </>
