@@ -2,8 +2,11 @@
 // https://codesandbox.io/p/sandbox/test-slot-machine-tst32t?file=%2Fpackage.json%3A11%2C6-11%2C28
 // https://codepen.io/josfabre/pen/abReBvP?editors=1111
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const SlotMachine = ({ children }) => {
+  const max = useSelector((state) => state.configSlicer.max);
+  const min = useSelector(state => state.configSlicer.min);
   // Width of the icons
   const icon_width = 100,
     // Height of one icon in the strip
@@ -54,8 +57,8 @@ const SlotMachine = ({ children }) => {
     });
   };
   const rollAll = () => {
-    const min = 0,
-      max = 400;
+    // const min = 0,
+    //   max = 400;
     const randNum = Math.floor(Math.random() * max - min + 1 + min);
     let winner_num = String(randNum).padStart(3, "0");
     winner_num = [...winner_num];
@@ -72,15 +75,19 @@ const SlotMachine = ({ children }) => {
         );
 
         // Win conditions
-        if (indexes[0] == indexes[1] || indexes[1] == indexes[2]) {
-          const winCls = indexes[0] == indexes[2] ? "win2" : "win1";
-          document.querySelector(".slots").classList.add(winCls);
-          setTimeout(
-            () => document.querySelector(".slots").classList.remove(winCls),
-            2000
-          );
-        }
-
+        // if (indexes[0] == indexes[1] || indexes[1] == indexes[2]) {
+        //   const winCls = indexes[0] == indexes[2] ? "win2" : "win1";
+        //   document.querySelector(".slots").classList.add(winCls);
+        //   setTimeout(
+        //     () => document.querySelector(".slots").classList.remove(winCls),
+        //     2000
+        //   );
+        // }
+        document.querySelector(".slots")?.classList?.add("win1");
+        setTimeout(
+          () => document.querySelector(".slots")?.classList?.remove('win1'),
+          2000
+        );
         // Again!
         // setTimeout(rollAll, 3000);
       });
@@ -93,17 +100,18 @@ const SlotMachine = ({ children }) => {
   }
   return (
     <>
-      <div>
+      <div className="flex flex-col items-center">
         <div id="slots" className="slots">
           <div className="reel"></div>
           <div className="reel"></div>
           <div className="reel"></div>
         </div>
-        <div>
-          <button onClick={rollAll}>Spin</button>
-          <button onClick={topSpin}>Top Spin</button>
+        <div className="">
+          <button type="button" className="text-md font-semibold leading-6 bg-gray-400 p-5 mt-5 rounded" onClick={rollAll}>Spin</button>
+          {/* <button onClick={topSpin}>Top Spin</button> */}
         </div>
       </div>
+
     </>
   );
 };

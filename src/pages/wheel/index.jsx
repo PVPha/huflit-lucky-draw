@@ -1,10 +1,12 @@
 import React, { useEffect, useReducer, useState } from "react";
-import WheelComponent from "./components/wheel";
+import WheelComponent from "../components/wheel";
 import { useSelector } from "react-redux";
 import { wheelSlice } from "@/redux/commonSlicer/wheelSlicer";
 import store from "@/redux";
-import _ from 'lodash';
-const Home = () => {
+import _ from "lodash";
+import { useRouter } from "next/router";
+const Wheel = () => {
+  const router = useRouter();
   const segments = useSelector((state) => state.wheelSlicer.segments);
   const segColors = useSelector((state) => state.wheelSlicer.segColors);
   const segmentsBK = useSelector((state) => state.wheelSlicer.segmentsBK);
@@ -26,13 +28,17 @@ const Home = () => {
   );
   const onFinished = (item) => {
     console.log(item.winner, item.index);
-    updateState({ showWinnerPopup: true, winner: item.winner, indexOfItem: item.index });
+    updateState({
+      showWinnerPopup: true,
+      winner: item.winner,
+      indexOfItem: item.index,
+    });
   };
   const onReset = () => {
     store.dispatch(wheelSlice.actions.setSegments(segmentsBK));
     store.dispatch(wheelSlice.actions.setSegColors(segColorsBK));
     updateState({ countSegments: state.countSegments + 1 });
-  }
+  };
   const onClosed = () => {
     const tempSegments = _.cloneDeep(segments);
     const tempSegColors = _.cloneDeep(segColors);
@@ -42,7 +48,7 @@ const Home = () => {
     store.dispatch(wheelSlice.actions.setSegments(tempSegments));
     updateState({ countSegments: state.countSegments + 1 });
     updateState({ showWinnerPopup: false });
-  }
+  };
 
   const randomColor = (segmentsLength) => {
     let segColors = [];
@@ -65,39 +71,55 @@ const Home = () => {
     store.dispatch(wheelSlice.actions.setSegColorsBK(segColors));
     store.dispatch(wheelSlice.actions.setSegments(segments));
     store.dispatch(wheelSlice.actions.setSegColors(segColors));
-    updateState({ segments: segments, segColors: segColors, countSegments: segments.length });
+    updateState({
+      segments: segments,
+      segColors: segColors,
+      countSegments: segments.length,
+    });
   };
   return (
     <>
-      <div className="flex">
-        <div key={state.countSegments}>
+      <div className="flex flex-col hufflit">
+        <div className="fixed top-28 left-0 ml-10" key={state.countSegments}>
           <WheelComponent
             segments={segments}
             segColors={segColors}
-            winningSegment="better luck next time"
+            winningSegment=""
             onFinished={(winner) => onFinished(winner)}
-            primaryColor="black"
+            primaryColor="yellow"
             contrastColor="white"
             buttonText="Spin"
             isOnlyOnce={false}
             countSegments={state.countSegments}
           />
         </div>
-        <div className="mt-10">
+        <div className="">
           <div>
-            <input
-              className="text-black"
-              type="number"
-              value={state.quantity}
-              onChange={(event) => {
-                setQuantitySegments(event.target.value);
-              }}
-            />
           </div>
-          <button className="mt-2 p-4 bg-gray-500" onClick={onReset}>
-            reset
-          </button>
+          
         </div>
+      </div>
+      <div className="fixed right-0 bottom-0 flex flex-col">
+        {/* <button>
+          <span class="material-symbols-outlined">
+            attractions
+          </span>
+        </button> */}
+        <button onClick={onReset}>
+          <span class="material-symbols-outlined">
+            restart_alt
+          </span>
+        </button>
+        <button onClick={() => {router.push('/slot')}}>
+          <span class="material-symbols-outlined">
+            apps
+          </span>
+        </button>
+        <button onClick={() => {
+          router.push('/config')
+        }}>
+          <span class="material-symbols-outlined">settings</span>
+        </button>
       </div>
       <div
         id="popup-modal"
@@ -108,7 +130,7 @@ const Home = () => {
           !state.showWinnerPopup && "hidden"
         }  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
-        <div className="relative p-4 w-full max-w-md max-h-full w-96">
+        <div className="relative p-4 w-full max-w-md max-h-full w-screen">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
               type="button"
@@ -133,7 +155,7 @@ const Home = () => {
               {/* <span className="sr-only">Close modal</span> */}
             </button>
             <div className="p-4 md:p-5 text-center">
-              <svg
+              {/* <svg
                 className="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,8 +169,11 @@ const Home = () => {
                   strokeWidth="2"
                   d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
-              </svg>
-              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              </svg> */}
+              <div className="mt-5 font-medium text-2xl text-red-500">
+                Chúc mừng
+              </div>
+              <h3 className="mt-5 mb-5 text-xl font-normal text-yellow-300">
                 {state.winner}
               </h3>
               <button
@@ -173,4 +198,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default Wheel;
