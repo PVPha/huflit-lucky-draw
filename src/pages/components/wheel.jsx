@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const WheelComponent = ({
 countSegments,
-  segments,
+  segments = [],
   segColors,
   winningSegment,
   onFinished,
