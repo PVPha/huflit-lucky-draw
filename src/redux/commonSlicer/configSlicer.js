@@ -4,6 +4,7 @@ const name = 'config';
 const initialState = {
     max: 0,
     min: 0,
+    listWinnerNum: []
 }
 
 const setMax = (state, action) => {
@@ -12,6 +13,9 @@ const setMax = (state, action) => {
 const setMin = (state, action) => {
     state.min = action.payload;
 }
+const setListWinnerNum = (state, action) => {
+    state.listWinnerNum = action.payload;
+}
 
 export const configSlicer = createSlice({
     name,
@@ -19,5 +23,6 @@ export const configSlicer = createSlice({
     reducers: {
         setMax,
         setMin,
+        setListWinnerNum
     }
 });

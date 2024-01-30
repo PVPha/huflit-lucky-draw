@@ -1,12 +1,16 @@
 // https://github.com/nuxy/slot-machine-gen/blob/master/demo/css/demo.css
 // https://codesandbox.io/p/sandbox/test-slot-machine-tst32t?file=%2Fpackage.json%3A11%2C6-11%2C28
 // https://codepen.io/josfabre/pen/abReBvP?editors=1111
-import { useEffect } from "react";
+import store from "@/redux";
+import { configSlicer } from "@/redux/commonSlicer/configSlicer";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const SlotMachine = ({ children }) => {
   const max = useSelector((state) => state.configSlicer.max);
   const min = useSelector(state => state.configSlicer.min);
+  const listWinnerNum = useSelector(state => state.configSlicer.listWinnerNum);
+  const [listWinNum, setListWinNum] = useState([])
   // Width of the icons
   const icon_width = 100,
     // Height of one icon in the strip
@@ -56,10 +60,25 @@ const SlotMachine = ({ children }) => {
       }, (9 + 1 * delta) * time_per_icon + offset * 150);
     });
   };
+  const random_winner = () => {
+    let randNum = Math.floor(Math.random() * max - min + 1 + min);
+    if (listWinnerNum.length === max) {
+      return randNum;
+    }
+    while (listWinnerNum.includes(randNum)) {
+      console.log('re random', randNum);
+      randNum = Math.floor(Math.random() * max - min + 1 + min);
+    }
+    store.dispatch(configSlicer.actions.setListWinnerNum([...listWinnerNum, randNum]))
+    return randNum;
+  }
   const rollAll = () => {
     // const min = 0,
     //   max = 400;
-    const randNum = Math.floor(Math.random() * max - min + 1 + min);
+    let randNum = random_winner()
+    
+    
+    console.log(listWinnerNum ,randNum);
     let winner_num = String(randNum).padStart(3, "0");
     winner_num = [...winner_num];
     console.log(winner_num);

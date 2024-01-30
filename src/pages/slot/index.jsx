@@ -1,8 +1,14 @@
 import { useRouter } from "next/router"
 import SlotMachine from "../components/slot"
+import { useEffect } from "react";
+import store from "@/redux";
+import { configSlicer } from "@/redux/commonSlicer/configSlicer";
 
 const Slot = () => {
     const router = useRouter();
+    useEffect(() => {
+        store.dispatch(configSlicer.actions.setListWinnerNum([]))
+    }, [])
     return (<>
         <div className="hufflit">
             <div className="fixed left-0 top-1/4 ml-32">
