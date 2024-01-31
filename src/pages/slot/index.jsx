@@ -7,7 +7,7 @@ import { configSlicer } from "@/redux/commonSlicer/configSlicer";
 const Slot = () => {
     const router = useRouter();
     useEffect(() => {
-        store.dispatch(configSlicer.actions.setListWinnerNum([]))
+        // store.dispatch(configSlicer.actions.setListWinnerNum([]))
     }, [])
     return (<>
         <div className="hufflit">
