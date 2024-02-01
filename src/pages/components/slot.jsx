@@ -46,7 +46,7 @@ const SlotMachine = ({ children }) => {
   };
   const random_winner = () => {
     let randNum = Math.floor(Math.random() * max - min + 1 + min);
-    if (listWinnerNum.length === max) {
+    if (listWinnerNum.length === (+max)) {
       store.dispatch(configSlicer.actions.setListWinnerNum([]))
       return randNum;
     }
