@@ -119,14 +119,17 @@ const SlotMachine = ({ children }) => {
   }
   return (
     <>
-      <div className="flex flex-col items-center">
-        <div id="slots" className="slots">
-          <div className="reel"></div>
-          <div className="reel"></div>
-          <div className="reel"></div>
+      <div className="flex flex-col items-center relative">
+        <div className="slots-wrapper">
+          <div id="slots" className="slots">
+            <div className="reel"></div>
+            <div className="reel"></div>
+            <div className="reel"></div>
+          </div>
         </div>
-        <div className="">
-          <button type="button" className="text-md font-semibold leading-6 bg-gray-400 p-5 mt-5 rounded" onClick={rollAll}>Spin</button>
+        
+        <div className="absolute -bottom-10">
+          <button type="button" className="text-md font-semibold leading-6 p-5 rounded w-40" style={{ background: '#F5B70C', color: '#FF0404', fontWeight: 'bold', fontSize: '30px'}} onClick={rollAll}>SPIN</button>
           {/* <button onClick={topSpin}>Top Spin</button> */}
         </div>
       </div>

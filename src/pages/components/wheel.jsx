@@ -8,9 +8,9 @@ countSegments,
   onFinished,
   primaryColor = "black",
   contrastColor = "white",
-  buttonText = "Spin",
+  buttonText = "",
   isOnlyOnce = true,
-  size = 290,
+  size = 376,
   upDuration = 100,
   downDuration = 1000,
   fontFamily = "proxima-nova",
@@ -29,8 +29,8 @@ countSegments,
   const downTime = segments.length * downDuration;
   let spinStart = 0;
   let frames = 0;
-  const centerX = 300;
-  const centerY = 300;
+  const centerX = 495;
+  const centerY = 435;
   useEffect(() => {
     // console.log("render wheel");
     wheelInit();
@@ -142,14 +142,14 @@ countSegments,
     ctx.arc(centerX, centerY, size, lastAngle, angle, false);
     ctx.lineTo(centerX, centerY);
     ctx.closePath();
-    ctx.fillStyle = segColors[key];
+    ctx.fillStyle = key % 2 === 0 ? '#FFB016' : '#DD0606';
     ctx.fill();
     ctx.stroke();
     ctx.save();
     ctx.translate(centerX, centerY);
     ctx.rotate((lastAngle + angle) / 2);
-    ctx.fillStyle = contrastColor;
-    ctx.font = "bold 1em " + fontFamily;
+    ctx.fillStyle = key % 2 === 0 ? '#E43030' : '#FFDF8B';
+    ctx.font = "bold 1.6em " + fontFamily;
     ctx.fillText(value?.substr(0, 21), size / 2 + 20, 0);
     ctx.restore();
   };
@@ -159,6 +159,8 @@ countSegments,
     let lastAngle = angleCurrent;
     const len = segments.length;
     const PI2 = Math.PI * 2;
+    const background =  new Image();
+    background.src = "./images/wheel_border.png"
     ctx.lineWidth = 1;
     ctx.strokeStyle = primaryColor;
     ctx.textBaseline = "middle";
@@ -172,25 +174,28 @@ countSegments,
 
     // Draw a center circle
     ctx.beginPath();
-    ctx.arc(centerX, centerY, 50, 0, PI2, false);
+    ctx.arc(centerX, centerY, 49, 0, PI2, false);
     ctx.closePath();
-    ctx.fillStyle = primaryColor;
+    ctx.fillStyle = 'white';
     ctx.lineWidth = 10;
-    ctx.strokeStyle = contrastColor;
+    ctx.strokeStyle = 'blue';
     ctx.fill();
+  
     ctx.font = "bold 1em " + fontFamily;
-    ctx.fillStyle = contrastColor;
+    ctx.fillStyle = 'blue';
     ctx.textAlign = "center";
-    ctx.fillText(buttonText, centerX, centerY + 3);
+    // ctx.fillText(buttonText, centerX, centerY + 3);
     ctx.stroke();
 
     // Draw outer circle
     ctx.beginPath();
     ctx.arc(centerX, centerY, size, 0, PI2, false);
     ctx.closePath();
-
+    // background.onload = () => {
+    //   ctx.drawImage(background, 0, 0)
+    // }
     ctx.lineWidth = 10;
-    ctx.strokeStyle = primaryColor;
+    ctx.strokeStyle = "#FF1F1F";
     ctx.stroke();
   };
 
@@ -213,12 +218,12 @@ countSegments,
     if (i < 0) i = i + segments.length;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = primaryColor;
-    ctx.font = "bold 1.5em " + fontFamily;
+    ctx.fillStyle = i % 2 === 0 ? '#E43030' : '#FFDF8B';
+    ctx.font = "bold 1.6em " + fontFamily;
     currentSegment = segments[i];
     currentSegmentIndex = i;
-    isStarted &&
-      ctx.fillText(currentSegment, centerX + 10, centerY + size + 50);
+    // isStarted &&
+    //   ctx.fillText(i % 2 === 0 ? '#FFB016' : '#DD0606', centerX + 10, centerY + size + 50);
   };
   const clear = () => {
     const ctx = canvasContext;
@@ -229,9 +234,12 @@ countSegments,
       <canvas
         id="canvas"
         width="1000"
-        height="800"
+        height="1000"
         style={{
           pointerEvents: isFinished && isOnlyOnce ? "none" : "auto",
+          backgroundImage: "url('./images/wheel_border.png')",
+          backgroundPositionY: '-55px',
+          backgroundRepeat:'no-repeat'
         }}
       />
     </div>
