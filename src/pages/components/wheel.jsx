@@ -12,7 +12,7 @@ countSegments,
   isOnlyOnce = true,
   size = 376,
   upDuration = 100,
-  downDuration = 1000,
+  downDuration = 300,
   fontFamily = "proxima-nova",
 }) => {
   let currentSegment = "";
@@ -20,7 +20,7 @@ countSegments,
   let isStarted = false;
   const [isFinished, setFinished] = useState(false);
   let timerHandle = 0;
-  const timerDelay = segments.length;
+  const timerDelay = segments.length / 2;
   let angleCurrent = 0;
   let angleDelta = 0;
   let canvasContext = null;
