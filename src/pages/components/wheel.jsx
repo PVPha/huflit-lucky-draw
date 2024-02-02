@@ -13,7 +13,7 @@ countSegments,
   size = 376,
   upDuration = 100,
   downDuration = 300,
-  fontFamily = "proxima-nova",
+  fontFamily = "Arial",
 }) => {
   let currentSegment = "";
   let currentSegmentIndex = 0;
@@ -150,7 +150,7 @@ countSegments,
     ctx.rotate((lastAngle + angle) / 2);
     ctx.fillStyle = key % 2 === 0 ? '#E43030' : '#FFDF8B';
     ctx.font = "bold 1.6em " + fontFamily;
-    ctx.fillText(value?.substr(0, 21), size / 2 + 20, 0);
+    ctx.fillText(value?.substr(0, 21).toUpperCase(), size / 2 + 20, 0);
     ctx.restore();
   };
 

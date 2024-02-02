@@ -99,7 +99,7 @@ const SlotMachine = ({ children }) => {
         </div>
         
         <div className="absolute -bottom-10">
-          <button type="button" className="text-md font-semibold leading-6 p-5 rounded w-40" style={{ background: '#F5B70C', color: '#FF0404', fontWeight: 'bold', fontSize: '30px'}} onClick={rollAll}>SPIN</button>
+          <button type="button" className="text-md font-semibold leading-6 p-5 rounded w-40" style={{ background: '#F5B70C', color: '#FF0404', fontWeight: 'bold', fontSize: '30px', fontFamily: 'Arial'}} onClick={rollAll}>SPIN</button>
           {/* <button onClick={topSpin}>Top Spin</button> */}
         </div>
       </div>
