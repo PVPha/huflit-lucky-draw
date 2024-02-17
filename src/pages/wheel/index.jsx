@@ -79,8 +79,8 @@ const Wheel = () => {
   };
   return (
     <>
-      <div className="flex flex-col hufflit">
-        <div className="fixed top-28 left-0 ml-10" key={state.countSegments}>
+      <div className="flex flex-col hufflit_wheel">
+        <div className="fixed top-32 left-0 ml-10" key={state.countSegments}>
           <WheelComponent
             segments={segments}
             segColors={segColors}

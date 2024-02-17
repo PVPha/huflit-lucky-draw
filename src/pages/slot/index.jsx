@@ -10,7 +10,7 @@ const Slot = () => {
         // store.dispatch(configSlicer.actions.setListWinnerNum([]))
     }, [])
     return (<>
-        <div className="hufflit-home">
+        <div className="hufflit_slot">
             <div className="fixed left-1/4 bottom-64 ml-32">
                 <SlotMachine></SlotMachine>
             </div>

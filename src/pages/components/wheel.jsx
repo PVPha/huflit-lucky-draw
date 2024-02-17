@@ -31,12 +31,25 @@ countSegments,
   let frames = 0;
   const centerX = 495;
   const centerY = 435;
+  let duration_max = 0;
   useEffect(() => {
     // console.log("render wheel");
     wheelInit();
     setTimeout(() => {
       window.scrollTo(0, 1);
     }, 0);
+    document.addEventListener("keydown", () => {
+      if (isStarted){
+        stop()
+      } 
+    })
+    return () => {
+      document.removeEventListener("keydown", () => {
+        if (isStarted) {
+          stop()
+        }
+      })
+    }
   }, []);
   
   const wheelInit = () => {
@@ -89,24 +102,26 @@ countSegments,
     if (duration < upTime) {
       progress = duration / upTime;
       angleDelta = maxSpeed * Math.sin((progress * Math.PI) / 2);
-    } else {
-      if (winningSegment) {
-        if (currentSegment === winningSegment && frames > segments.length) {
-          progress = duration / upTime;
-          angleDelta =
-            maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
-          progress = 1;
-        } else {
-          progress = duration / downTime;
-          angleDelta =
-            maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
-        }
-      } else {
-        progress = duration / downTime;
-        angleDelta =
-          maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
-      }
-      if (progress >= 1) finished = true;
+    } 
+    else {
+      duration_max = duration
+      // if (winningSegment) {
+      //   if (currentSegment === winningSegment && frames > segments.length) {
+      //     progress = duration / upTime;
+      //     angleDelta =
+      //       maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
+      //     progress = 1;
+      //   } else {
+      //     progress = duration / downTime;
+      //     angleDelta =
+      //       maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
+      //   }
+      // } else {
+      //   progress = duration / downTime;
+      //   angleDelta =
+      //     maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
+      // }
+      // if (progress >= 1) finished = true;
     }
 
     angleCurrent += angleDelta;
@@ -120,6 +135,24 @@ countSegments,
       angleDelta = 0;
     }
   };
+
+
+  const stop = () => {
+    setTimeout(() => {
+      let progress = duration_max / downTime;
+      angleDelta =
+        maxSpeed * Math.sin((progress * Math.PI) / 2 + Math.PI / 2);
+      angleCurrent += angleDelta;
+      while (angleCurrent >= Math.PI * 2) angleCurrent -= Math.PI * 2;
+      setFinished(true);
+      console.log(currentSegmentIndex);
+      onFinished({ winner: currentSegment, index: currentSegmentIndex });
+      clearInterval(timerHandle);
+      timerHandle = 0;
+      angleDelta = 0;  
+    }, 500);
+    
+  }
 
   const wheelDraw = () => {
     clear();
