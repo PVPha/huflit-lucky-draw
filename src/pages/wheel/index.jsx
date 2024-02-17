@@ -130,7 +130,7 @@ const Wheel = () => {
           !state.showWinnerPopup && "hidden"
         }  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
-        <div className="relative p-4 w-full max-w-md max-h-full w-screen">
+        <div className="relative flex justify-center p-4 w-full max-h-full w-screen">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700" style={{ borderRadius: '8px', background: 'linear-gradient(45deg, #FF3838, #CF0000)'}}>
             <button
               type="button"
@@ -176,7 +176,7 @@ const Wheel = () => {
                 XIN CHÚC MỪNG
               </div>
               <div className="flex flex-col items-center justify-center mt-5 text-xl font-normal w-full h-20" style={{background:'white'}}>
-                <p style={{ color: "#E00000", fontSize: '40px'}}>{state.winner}</p>
+                <p className="px-5 py-5" style={{ color: "#E00000", fontSize: '40px', fontFamily: 'Arial', textTransform: 'uppercase' }}>{state.winner}</p>
               </div>
               {/* <button
                 data-modal-hide="popup-modal"
