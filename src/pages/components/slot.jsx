@@ -95,6 +95,7 @@ const SlotMachine = ({ children }) => {
             <div className="reel"></div>
             <div className="reel"></div>
             <div className="reel"></div>
+            <span className="highlight"></span>
           </div>
         </div>
         

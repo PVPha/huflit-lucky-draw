@@ -11,7 +11,7 @@ const Slot = () => {
     }, [])
     return (<>
         <div className="hufflit_slot">
-            <div className="fixed left-1/4 bottom-64 ml-32">
+            <div className="fixed left-1/4 bottom-64 ml-32" style={{bottom: '4rem',marginLeft: '-13rem'}}>
                 <SlotMachine></SlotMachine>
             </div>
             <div className="fixed right-0 bottom-0 flex flex-col">
